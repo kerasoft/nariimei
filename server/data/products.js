@@ -1,6 +1,5 @@
 export const products = [
     {   
-        _id: '1',
         name: 'product1',
         image: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=450/app/images/products/sliding_image/394525a.jpg?ts=1690813910',
         price: 500,
@@ -11,7 +10,6 @@ export const products = [
         desc: 'Die der ich friedlich ankleiden ergötzt schnelle bist. Warum perlet gezagt so die verschwiegen ruft, mir\'s schon im schaust der gezagt sanftes, gar wilde mit.'
     },
     {   
-        _id: '2',
         name: 'product2',
         image: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=450/app/images/products/sliding_image/467690a.jpg?ts=1690817155',
         price: 699,
@@ -22,7 +20,6 @@ export const products = [
         desc: 'Dich du denkst der schnee du deine, verschwiegen manchmal die um nicht du gehofft der der es. Wilde des du ist trübhell. Ich glück großer.'
     },
     {
-        _id: '3',
         name: 'product3',
         image: 'http://cdn.grofers.com/app/images/products/sliding_image/321169a.jpg?ts=1690813273',
         price: 499,
