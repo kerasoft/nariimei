@@ -3,6 +3,7 @@ import connectDB from './config/db.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
+import { notFound, errorHandler } from './middleware/errorHandler.js'
 
 
 dotenv.config()
@@ -19,6 +20,9 @@ app.get('/', (req, res)=>{
 })
 
 app.use('/api/products', productRoutes)
+
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(port, ()=>{
     console.log('listening at port', port)
