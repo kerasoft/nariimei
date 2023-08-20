@@ -1,21 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { RiShareBoxFill } from 'react-icons/ri'
 const ProductCard = ({product}) => {
   return (
-    <Link to={`/product/${product._id}`} className='rounded-md w-[16rem] px-1 py-2 bg-gray-50 shadow-lg my-3'>
-        <img className='rounded-lg' src={product.image} alt='' />
-        <div className='mt-4'>
-          <div className='flex mb-1'>
-            <h3 className='uppercase font-semibold mb-2 flex-1'>{product.name}</h3>
-            <span className='bg-black p-1 w-8 text-white text-center font-semibold rounded-md'>{product.rating.toFixed(1)}</span>
+    <Link to={`/product/${product._id}`} className='relative rounded-xl w-[9rem] h-[11rem] sm:w-[14rem] sm:h-[15rem] bg-gradient-to-r from-gray-100 to-gray-300 shadow-lg my-3 px-2 backdrop-filter backdrop-blur-md'>
+        <FaRegHeart onClick={(e)=>{e.preventDefault()}} className='absolute text-lg text-purple-800 sm:text-2xl right-2 sm:right-4 top-2 sm:top-6' />
+        <RiShareBoxFill onClick={(e)=>{e.preventDefault()}} className='absolute text-lg sm:text-[1.6rem] text-purple-800 right-2 sm:right-4 top-8 sm:top-12' />
+        <img className='w-9/12 m-4 mx-auto rounded-lg sm:w-8/12' src={product.image} alt='' />
+        <div className='mt-4 sm:px-1'>
+          <div className='flex'>
+            <h3 className='flex-1 mb-1 text-[.7rem] sm:text-base font-semibold uppercase text-slate-900'>{product.name}</h3>
+            <span className='text-[.7rem] sm:text-base w-6 sm:w-8 p-1 font-semibold text-center text-white bg-green-700 rounded-md'>{product.rating.toFixed(1)}</span>
           </div>
-          <div className='flex justify-between'>
-            <div className='flex flex-1 gap-2'><div className='bg-black rounded-full w-7 h-7 text-white flex justify-center items-center'>{product.stock}</div> <p>in stock</p></div>
-            <p className='text-xl font-bold self-end'>&#8377;{product.price}</p>
-          </div>
+          <p className='text-[.7rem] -mt-2 sm:text-base'>{product.size}</p>
         </div>
-        <button onClick={(e)=>{e.preventDefault()}} className='rounded-md mt-4 text-end px-5 py-3 bg-black text-white w-full'>ADD TO CART</button>
+        <button onClick={(e)=>{e.preventDefault()}} className='text-sm sm:text-base absolute flex justify-between bottom-0 w-[95%] px-5 py-2 sm:px-6 sm:py-3 text-white translate-y-1/2 translate-x-1/2 right-1/2 bg-purple-900 rounded-full font-bold'><span className=''>&#8377;{product.price}</span><span>ADD</span></button>
     </Link>
   )
 }

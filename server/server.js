@@ -1,7 +1,7 @@
 import express from 'express'
 import connectDB from './config/db.js'
 import dotenv from 'dotenv'
-import cors from 'cors'
+// import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
 import { notFound, errorHandler } from './middleware/errorHandler.js'
 
@@ -13,7 +13,7 @@ const app = express()
 
 connectDB()
 
-app.use(cors())
+// app.use(cors())
 
 app.get('/', (req, res)=>{
     res.send('server at 3000')

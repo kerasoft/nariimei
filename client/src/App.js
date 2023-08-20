@@ -6,7 +6,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <main className='max-w-[1200] mx-auto px-6'>
+      <main className='max-w-[1200] mx-auto px-4 py-12'>
         <Outlet />
       </main>
     </>
