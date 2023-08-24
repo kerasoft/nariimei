@@ -23,7 +23,7 @@ const CartScreen = () => {
                 <button onClick={()=>dispatch(deleteFromCart({i, purge:true}))} className='bg-gray-500 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex justify-center items-center self-end sm:text-lg'>
                   <RiDeleteBin5Fill />
                 </button>
-                <p className='text-lg sm:text-xl text-orange-600 text-end font-bold mt-auto'>&#8377;{item.price}</p>
+                <p className='text-lg sm:text-xl text-orange-600 text-end font-bold mt-auto'>&#8377;{item.totalPerUnit}</p>
                 <div className='flex flex-0 h-fit self-end rounded-md bg-gray-300 ring-2 ring-white mb-2 mt-3'>
                   <button onClick={()=>dispatch(deleteFromCart({i, decrement:true}))} type='button' className='w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center text-xl font-semibold'>-</button>
                   <div className='w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center border-x-[1px] border-white sm:text-xl font-semibold'>{item.qty}</div>

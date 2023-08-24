@@ -5,7 +5,7 @@ import {
 const initialState = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {
     cartItems: [],
     totalPrice: 0,
-    totalQty: 0
+    totalQty: 0,
 }
 
 const upadateCart = (state) => {
@@ -21,37 +21,42 @@ const cartSlice = createSlice({
             let qty = (item.qty || 1)
             const existingItem = state.cartItems.find((cartItem) => item._id === cartItem._id)
 
+            function updateTotal(){
+                state.totalPrice += (item.price * qty)
+                state.totalQty += qty
+            }
+
             if (existingItem) {
-                existingItem.qty += qty
-                existingItem.price += (item.price * qty)
+                if(existingItem.qty<item.stock){
+                    existingItem.qty += qty
+                    existingItem.totalPerUnit += (item.price * qty)
+                    updateTotal()
+                    upadateCart(state)
+                }
             } else {
                 state.cartItems.push({
                     ...item,
                     qty: qty,
-                    price: item.price * qty
+                    totalPerUnit: item.price * qty
                 })
+                updateTotal()
+                upadateCart(state)
             }
-            state.totalPrice += (item.price * qty)
-            state.totalQty += qty
-            console.log(state)
-            upadateCart(state)
         },
 
         deleteFromCart(state, action){
             const {i, decrement, purge} = action.payload
             if(purge){
-                state.totalPrice-=state.cartItems[i].price
+                state.totalPrice-=state.cartItems[i].totalPerUnit
                 state.totalQty-=state.cartItems[i].qty
                 state.cartItems.splice(i, 1)
 
             }
             if(decrement){
                 if(state.cartItems[i].qty > 1) {
-
-                    let price = state.cartItems[i].price/state.cartItems[i].qty
                     state.cartItems[i].qty--
-                    state.cartItems[i].price-=price
-                    state.totalPrice-=price
+                    state.cartItems[i].totalPerUnit-=state.cartItems[i].price
+                    state.totalPrice-=state.cartItems[i].price
                     state.totalQty--
                 }
             }
