@@ -2,6 +2,8 @@ import {
     createSlice
 } from "@reduxjs/toolkit";
 
+import { toast } from 'react-toastify'
+
 const initialState = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {
     cartItems: [],
     totalPrice: 0,
@@ -27,11 +29,13 @@ const cartSlice = createSlice({
             }
 
             if (existingItem) {
-                if(existingItem.qty<item.stock){
+                if((existingItem.qty+qty)<=item.stock){
                     existingItem.qty += qty
                     existingItem.totalPerUnit += (item.price * qty)
                     updateTotal()
                     upadateCart(state)
+                }else {
+                    toast('Sorry, Not more of this item in stock')
                 }
             } else {
                 state.cartItems.push({

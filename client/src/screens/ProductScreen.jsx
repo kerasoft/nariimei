@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetProductQuery } from '../slices/productsApiSlice'
-import Alert from '../components/Alert'
 import Loader from '../components/Loader'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../slices/cartSlice '
+import { toast } from 'react-toastify'
 const ProductScreen = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ const ProductScreen = () => {
     isLoading ? 
       <Loader /> :
       error ? 
-        <Alert message={error?.data?.message || error.error} /> :
+        toast(error?.data?.message || error.error) :
         <div className='mx-auto max-w-[1100px] px-4 py-4'>
           <h3 className='mt-4 lg:mt-8 text-lg md:text-2xl text-gray-200'>{product.name}</h3>
           <div className='w-full flex flex-col lg:flex-row gap-y-5 lg:gap-y-0 justify-between mt-5 items-center'>
