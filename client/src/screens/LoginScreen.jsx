@@ -21,7 +21,7 @@ const LoginScreen = () => {
     let redirect = searchParam.get('redirect') || '/'
     
     useEffect(() => {
-    userInfo && navigate(redirect)
+    (userInfo && redirect) && navigate(redirect)
     }, [userInfo, navigate, redirect])
 
     async function handleSubmit(e) {
@@ -44,10 +44,9 @@ const LoginScreen = () => {
         ))
     }
 
-
     const { email, password } = formData
     return (
-        <div className='mt-16 sm:mt-12 flex justify-center items-center px-4 sm:px-0'>
+        !userInfo && <div className='mt-16 sm:mt-12 flex justify-center items-center px-4 sm:px-0'>
             <div className='flex-none w-full p-0 rounded-lg sm:p-12 sm:bg-slate-800 sm:w-fit'>
                 <h3 className='text-center text-gray-400 font-bold text-2xl mb-12'>Hello, welcome back!</h3>
                 <form onSubmit={handleSubmit} className='[&>*]:block [&>*]:mb-5'>

@@ -25,7 +25,7 @@ const Header = () => {
                     </Link>
                     
                     {/* @routing: If there's a token, redirect to /profile, or If user had ever logged in on same browser(and currently no auth) then redirect to /login or else to /register*/}
-                    <Link to={userInfo ? '/profile' : 'auth' in localStorage ? '/login' : '/register'} className='relative font-bold'><FiUser className='text-[1.3rem] md:text-[1.45rem] text-white'/>{userInfo && <span className='absolute bottom-0 w-3 h-3 rounded-full bg-[#00c000] -right-1'></span>}</Link>
+                    <Link to={userInfo ? '/profile' : 'userInfo' in localStorage ? '/login' : '/register'} className='relative font-bold'><FiUser className='text-[1.3rem] md:text-[1.45rem] text-white'/>{userInfo && <span className='absolute bottom-0 w-3 h-3 rounded-full bg-[#00c000] -right-1'></span>}</Link>
                     {/* <div className='absolute z-[99] top-12 shadow-md shadow-current rounded-lg right-2'>
                         <ul className='font-semibold'>
                             <li className='text-gray-200 py-2 px-7 bg-black rounded-lg rounded-b-none'><Link to={'/login'}>Login</Link></li>
