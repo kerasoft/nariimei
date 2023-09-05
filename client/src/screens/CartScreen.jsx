@@ -3,11 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import EmptyCart from '../components/EmptyCart'
 import { addToCart, deleteFromCart } from '../slices/cartSlice '
 import {RiDeleteBin5Fill} from 'react-icons/ri'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const CartScreen = () => {
+  const navigate = useNavigate()
+
   const {totalPrice, totalQty, cartItems} = useSelector(state=>state.cart)
   const dispatch = useDispatch()
+
+  function handleCheckout(){
+    navigate('/login?redirect=/shipping')
+  }
   return (
     <div className='mt-5'>
       {totalQty === 0 && <EmptyCart />}
@@ -40,7 +46,7 @@ const CartScreen = () => {
               <div className='flex mt-2 justify-between px-8 text-orange-500 text-[1.25rem] sm:text-[1.35rem]'><span>Sub Total:</span><span className='font-bold'>&#8377;{totalPrice}</span></div>
             </div>
           </div>
-          <div className='mt-5 mx-auto max-w-[1100px] text-end'><button className='w-full sm:w-fit px-8 py-[13px] sm:py-3 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-yellow-600 to-red-600 rounded-md font-bold uppercase text-[1.125rem] sm:text-lg text-gray-800'>Checkout</button></div>
+          <div className='mt-5 mx-auto max-w-[1100px] text-end'><button type="button" onClick={handleCheckout} className='w-full sm:w-fit px-8 py-[13px] sm:py-3 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-yellow-600 to-red-600 rounded-md font-bold uppercase text-[1.125rem] sm:text-lg text-gray-800'>Checkout</button></div>
         </div>
       </div>}
     </div>

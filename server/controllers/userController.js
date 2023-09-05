@@ -85,8 +85,13 @@ const updateUserProfile = asyncHandler(async(req, res) => {
     if(user) {
         user.name = req.body.name || user.name
 
-        if(req.body.password) {
-            user.password = req.body.password
+        if(req.body.newPassword) {
+            if(await user.matchPassword(req.body.oldPassword)) {
+                user.password = req.body.newPassword
+            }else {
+                res.status(401)
+                throw new Error('Password entered is wrong')
+            }
         }
 
         const updatedUser = await user.save()

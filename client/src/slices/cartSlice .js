@@ -8,6 +8,8 @@ const initialState = localStorage.getItem('cart') ? JSON.parse(localStorage.getI
     cartItems: [],
     totalPrice: 0,
     totalQty: 0,
+    shippingAddress: {},
+    PaymentMethod: ''
 }
 
 const upadateCart = (state) => {
