@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setCredentials } from '../slices/authSlice'
 import Spinner from '../components/Spinner'
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
 
 const LoginScreen = () => {
+    const [showPassword, setShowpassword] = useState(false)
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -21,16 +23,20 @@ const LoginScreen = () => {
     let redirect = searchParam.get('redirect') || '/'
     
     useEffect(() => {
-    (userInfo && redirect) && navigate(redirect)
+        (userInfo && redirect) && navigate(redirect)
     }, [userInfo, navigate, redirect])
 
     async function handleSubmit(e) {
         e.preventDefault()
-        try {
-            const res = await loginUser({email, password}).unwrap()
-            dispatch(setCredentials({...res}))
-        } catch (error) {
-            toast(error?.data?.message || error?.error)
+        if(!email.trim() || !password.trim()) {
+            toast('All fields are required')
+        } else {
+            try {
+                const res = await loginUser({email, password}).unwrap()
+                dispatch(setCredentials({...res}))
+            } catch (error) {
+                toast(error?.data?.message || error?.error)
+            }
         }
     }
 
@@ -39,7 +45,7 @@ const LoginScreen = () => {
         setFormData(formData => (
             {
                 ...formData,
-                [id]: value
+                [id]: (value.trim())
             }
         ))
     }
@@ -53,8 +59,8 @@ const LoginScreen = () => {
                     <div className='relative'>
                         <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="email">Email</label>
                         <input
-                            className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600'
-                            type="email"
+                            className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600 lowercase'
+                            type="text"
                             id='email'
                             onChange={handleChange}
                             value={email}
@@ -66,13 +72,16 @@ const LoginScreen = () => {
                         <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="password">Password</label>
                         <input
                             className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600'
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             id='password'
                             value={password}
                             onChange={handleChange}
                             placeholder='$Wing5fire'
                             autoComplete='new-password'
                         />
+                        <div onClick={()=>setShowpassword(!showPassword)} className='absolute right-4 top-1/2 -translate-y-1/2 text-xl text-gray-400 cursor-pointer'>
+                            {showPassword ? <MdVisibilityOff/> : <MdVisibility />}
+                        </div>
                     </div>
                     <button className='w-full px-5 py-3 font-bold tracking-wider uppercase bg-orange-700 rounded-md mt-7 text-gray-50' type='submit' disabled={isLoading}><div className='flex justify-center items-center gap-2'>Login {isLoading && <Spinner />}</div></button>
                 </form>
