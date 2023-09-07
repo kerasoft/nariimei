@@ -66,12 +66,12 @@ const UpdatePasswordScreen = () => {
                         <div className='relative'>
                             <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="email">Old Password</label>
                             <input
-                                className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600 lowercase'
+                                className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600'
                                 type={showPassword.old ? 'text' : 'password'}
                                 id='oldPassword'
                                 onChange={handleChange}
                                 value={oldPassword}
-                                placeholder='$Wing5fire'
+                                placeholder='$A123456'
                                 autoComplete='false'
                             />
                             <div onClick={()=>setShowPassword(showPassword=>({
@@ -89,7 +89,7 @@ const UpdatePasswordScreen = () => {
                                 id='newPassword'
                                 value={newPassword}
                                 onChange={handleChange}
-                                placeholder='$Wing5fire'
+                                placeholder='$A12345678'
                                 autoComplete='new-password'
                             />
                             <div onClick={()=>setShowPassword(showPassword=>({
@@ -108,7 +108,7 @@ const UpdatePasswordScreen = () => {
                                 id='confirmNewPassword'
                                 value={confirmNewPassword}
                                 onChange={handleChange}
-                                placeholder='$Wing5fire'
+                                placeholder='$A12345678'
                                 autoComplete='new-password'
                             />
                         </div>

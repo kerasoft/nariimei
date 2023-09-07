@@ -18,6 +18,8 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import OrderScreen from './screens/OrderScreen';
 import UpdatePasswordScreen from './screens/UpdatePasswordScreen';
+import ShippingScreen from './screens/ShippingScreen';
+import NewAddressScreen from './screens/NewAddressScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +32,8 @@ const router = createBrowserRouter(
       <Route path='/profile' element={<ProfileScreen />} />
       <Route path='/orders' element={<OrderScreen />} />
       <Route path='/update-password' element={<UpdatePasswordScreen />} />
+      <Route path='/shipping' element={<ShippingScreen />} />
+      <Route path='/new-address' element={<NewAddressScreen />} />
     </Route>
   )
 )

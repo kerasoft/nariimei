@@ -1,6 +1,31 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs'
 
+const addressSchema = new mongoose.Schema({
+    line1: {
+        type: String,
+        required: true,
+    },
+    line2: {
+        type: String,
+        required: true,
+    },
+    city: {
+        type: String,
+        required: true,
+    },
+    state: {
+        type: String,
+        required: true,
+    },
+    pin: {
+        type: String,
+        required: true,
+    }
+}, {
+    timestamps: true
+})
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -20,6 +45,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: false,
     },
+    address: [addressSchema],
 })
 
 userSchema.methods.matchPassword = async function (password){

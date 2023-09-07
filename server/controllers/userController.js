@@ -15,6 +15,7 @@ const authUser = asyncHandler(async(req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
+            address: user.address,
         })
     } else {
         res.status(401)
@@ -42,7 +43,8 @@ const registerUser = asyncHandler(async(req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            address: user.address,
         })
     }
 })
@@ -69,7 +71,8 @@ const getUserProfile = asyncHandler(async(req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            address: user.address,
         })
     } else {
         res.status(404)
@@ -84,7 +87,7 @@ const updateUserProfile = asyncHandler(async(req, res) => {
     const user = await User.findById(req.user._id)
     if(user) {
         user.name = req.body.name || user.name
-
+        // for password change
         if(req.body.newPassword) {
             if(await user.matchPassword(req.body.oldPassword)) {
                 user.password = req.body.newPassword
@@ -93,6 +96,10 @@ const updateUserProfile = asyncHandler(async(req, res) => {
                 throw new Error('Password entered is wrong')
             }
         }
+        //for adding new address
+        if(req.body.line1) {
+            user.address = [...user.address, req.body]
+        }
 
         const updatedUser = await user.save()
 
@@ -100,7 +107,8 @@ const updateUserProfile = asyncHandler(async(req, res) => {
             _id: updatedUser._id,
             name: updatedUser.name,
             email: updatedUser.email,
-            isAdmin: updatedUser.isAdmin
+            isAdmin: updatedUser.isAdmin,
+            address: updatedUser.address,
         })
     } else {
         res.status(404)
