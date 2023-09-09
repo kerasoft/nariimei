@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import Spinner from '../components/Spinner'
 import { useUpdateUserMutation } from '../slices/usersApiSlice'
 import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 const UpdatePasswordScreen = () => {
     const [showHint, setShowHint] = useState(false)
@@ -25,11 +24,6 @@ const UpdatePasswordScreen = () => {
     }
 
     const navigate = useNavigate()
-    const { userInfo } = useSelector(state => state.auth)
-    
-    useEffect(()=>{
-        !userInfo && navigate('/login')
-    },[userInfo, navigate])
 
     const [updateUser, { isLoading }] = useUpdateUserMutation()
 

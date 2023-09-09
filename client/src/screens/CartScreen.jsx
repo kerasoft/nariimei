@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import EmptyCart from '../components/EmptyCart'
-import { addToCart, deleteFromCart } from '../slices/cartSlice '
+import { addToCart, deleteFromCart } from '../slices/cartSlice'
 import {RiDeleteBin5Fill} from 'react-icons/ri'
 import { Link, useNavigate } from 'react-router-dom'
 

@@ -3,7 +3,7 @@ import { useGetProductQuery } from '../slices/productsApiSlice'
 import Loader from '../components/Loader'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addToCart } from '../slices/cartSlice '
+import { addToCart } from '../slices/cartSlice'
 import { toast } from 'react-toastify'
 const ProductScreen = () => {
   const navigate = useNavigate()

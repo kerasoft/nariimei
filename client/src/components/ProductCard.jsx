@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaRegHeart } from 'react-icons/fa'
 import { RiShareBoxFill } from 'react-icons/ri'
-import { addToCart } from '../slices/cartSlice '
+import { addToCart } from '../slices/cartSlice'
 import { useDispatch } from 'react-redux'
 const ProductCard = ({product}) => {
   const dispatch = useDispatch()
