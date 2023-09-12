@@ -82,12 +82,12 @@ const RegisterScreen = () => {
                     <div className='relative'>
                         <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="name">Full Name</label>
                         <input 
-                            className='capitalize text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600' 
+                            className='capitalize text-gray-100 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600' 
                             type="name"
                             id='name'
                             onChange={handleChange}
                             value={name}
-                            placeholder='Abdul Kalaam'
+                            placeholder='John Doe'
                             autoComplete='false'
                         />
                         {nameHint && <p className='text-sm mt-1 ml-2 text-gray-50'>3-24 chars of english alphabet</p>}
@@ -95,12 +95,12 @@ const RegisterScreen = () => {
                     <div className='relative'>
                         <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="email">Email</label>
                         <input 
-                            className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600 lowercase' 
+                            className='text-gray-100 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600 lowercase' 
                             type='text'
                             id='email'
                             onChange={handleChange}
                             value={email}
-                            placeholder='apj@greatness.com'
+                            placeholder='abc@email.com'
                             autoComplete='false'
                         />
                         {emailHint && <p className='text-sm mt-1 ml-2 text-gray-50'>abc@email.com, match this format.</p>}
@@ -108,12 +108,12 @@ const RegisterScreen = () => {
                     <div className='relative'>
                         <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="password">Password</label>
                         <input 
-                            className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600' 
+                            className='text-gray-100 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600' 
                             type={showPassword ? 'text' : 'password'} 
                             id='password'
                             value={password}
                             onChange={handleChange}
-                            placeholder='$Wing5fire'
+                            placeholder='$A123456'
                             autoComplete='false'
                         />
                         <div onClick={()=>setShowpassword(!showPassword)} className='absolute right-4 top-1/2 -translate-y-1/2 text-xl text-gray-400 cursor-pointer'>

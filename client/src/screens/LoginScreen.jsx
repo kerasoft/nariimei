@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useLoginUserMutation } from '../slices/usersApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -18,13 +18,14 @@ const LoginScreen = () => {
     const dispatch = useDispatch()
     const [loginUser, { isLoading }] = useLoginUserMutation()
 
+    const {pathname} = useLocation()
     const navigate = useNavigate()
     const [ searchParam ] = useSearchParams()
     let redirect = searchParam.get('redirect') || '/'
     
     useEffect(() => {
-        (userInfo && redirect) && navigate(redirect)
-    }, [userInfo, navigate, redirect])
+        (userInfo && redirect) && navigate(redirect, {state:pathname})
+    }, [userInfo, navigate, redirect, pathname])
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -59,24 +60,24 @@ const LoginScreen = () => {
                     <div className='relative'>
                         <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="email">Email</label>
                         <input
-                            className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600 lowercase'
+                            className='text-gray-100 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600 lowercase'
                             type="text"
                             id='email'
                             onChange={handleChange}
                             value={email}
-                            placeholder='apj@greatness.com'
+                            placeholder='abc@email.com'
                             autoComplete='false'
                         />
                     </div>
                     <div className='relative'>
                         <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="password">Password</label>
                         <input
-                            className='text-purple-200 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600'
+                            className='text-gray-100 focus:outline-none focus:border-orange-500 w-full sm:w-80 bg-transparent border-[2px] px-5 py-3 border-orange-700 rounded-md placeholder:text-gray-700 sm:placeholder:text-gray-600'
                             type={showPassword ? 'text' : 'password'}
                             id='password'
                             value={password}
                             onChange={handleChange}
-                            placeholder='$Wing5fire'
+                            placeholder='$A123456'
                             autoComplete='new-password'
                         />
                         <div onClick={()=>setShowpassword(!showPassword)} className='absolute right-4 top-1/2 -translate-y-1/2 text-xl text-gray-400 cursor-pointer'>

@@ -2,12 +2,28 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaRegHeart } from 'react-icons/fa'
 import { RiShareBoxFill } from 'react-icons/ri'
-import { addToCart } from '../slices/cartSlice'
-import { useDispatch } from 'react-redux'
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
+import { addToCart, deleteFromCart } from '../slices/cartSlice'
+import { useDispatch, useSelector } from 'react-redux'
 const ProductCard = ({product}) => {
   const dispatch = useDispatch()
 
-  function addToCartHandler(e){
+  const { cartItems } = useSelector(state => state.cart)
+  let existsInCart = cartItems.findIndex((item)=>item._id === product._id)
+  
+  let green = (5 - product.rating) * 30 + 100
+  let ratingBgColor = `rgb(0, ${green}, 0)`
+  console.log(ratingBgColor)
+
+  function decrementQty() {
+    if(cartItems[existsInCart].qty===1 && cartItems[existsInCart].qty>0){
+      dispatch(deleteFromCart({i:existsInCart, purge:true}))
+    }else {
+      dispatch(deleteFromCart({i:existsInCart, decrement: true}))
+    }
+  }
+
+  function addToCartHandler(e){ 
     e.preventDefault()
     dispatch(addToCart(product))
   }
@@ -19,11 +35,20 @@ const ProductCard = ({product}) => {
         <div className='mt-4 sm:px-1'>
           <div className='flex'>
             <h3 className='flex-1 mb-1 text-[.7rem] sm:text-base font-semibold uppercase text-slate-900'>{product.name}</h3>
-            <span className='text-[.7rem] sm:text-base w-6 sm:w-8 p-1 font-semibold text-center text-white bg-green-700 rounded-md'>{product.rating.toFixed(1)}</span>
+            <span style={{backgroundColor: ratingBgColor}} className={`text-[.7rem] sm:text-base w-6 sm:w-8 p-1 font-semibold text-center text-white rounded-md`}>{product.rating.toFixed(1)}</span>
           </div>
           <p className='text-[.7rem] -mt-2 sm:text-base'>{product.size}</p>
         </div>
-        <button type='button' onClick={addToCartHandler} className='text-sm sm:text-base absolute flex justify-between bottom-0 w-[95%] px-5 py-2 sm:px-6 sm:py-3 text-white translate-y-1/2 translate-x-1/2 right-1/2 bg-purple-900 rounded-full font-bold'><span className=''>&#8377;{product.price}</span><span>ADD</span></button>
+        <div onClick={(e)=>e.preventDefault()} className='cursor-default text-sm sm:text-base absolute flex justify-between bottom-0 w-[95%] text-white translate-y-1/2 translate-x-1/2 right-1/2 bg-purple-900 rounded-full font-bold items-center overflow-x-hidden'>
+          <span className='pl-4 sm:pl-5'>&#8377;{product.price}</span>
+          { existsInCart>-1 ? 
+            <div className='bg-purple-800 rounded-r-full flex items-center justify-around py-2 sm:py-2.5 pr-1'>
+              <span onClick={decrementQty} className='sm:text-lg px-1.5 sm:px-2.5 cursor-pointer'><AiOutlineMinus/></span>
+              <span className='px-1'>{cartItems[existsInCart].qty}</span>
+              <span onClick={()=>dispatch(addToCart({...cartItems[existsInCart], qty:1}))} className='sm:text-lg px-1.5 sm:px-2.5 cursor-pointer'><AiOutlinePlus/></span>
+            </div> : 
+            <button type='button' onClick={addToCartHandler} className='bg-purple-800 px-4 py-2 sm:px-5 sm:py-2.5 rounded-r-full'>ADD</button>}
+        </div>
     </Link>
   )
 }
