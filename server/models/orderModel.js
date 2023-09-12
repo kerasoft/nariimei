@@ -20,10 +20,12 @@ const orderSchema = new mongoose.Schema({
         }
     ],
     shippingAddress: {
-        address: {type: String, required: true},
+        line1: {type: String, required: true},
+        line2: {type: String, required: true},
         city: {type: String, required: true},
-        postalCode: {type: Number, required: true},
-        country: {type: String, required: true},
+        state: {type: String, required: true},
+        pin: {type: Number, required: true},
+        country: {type: String, default: 'India'},
     },
     paymentMethod: {
         type: String,
@@ -46,11 +48,6 @@ const orderSchema = new mongoose.Schema({
         default: 0.0,
     },
     shippingPrice: {
-        type: Number,
-        required: true,
-        default: 0.0,
-    },
-    totalPrice: {
         type: Number,
         required: true,
         default: 0.0,
