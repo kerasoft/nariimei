@@ -12,11 +12,16 @@ const ShippingScreen = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { userInfo } = useSelector(state => state.auth)
-
+    const { cartItems } = useSelector(state => state.cart)
 
     useEffect(() => {
-        !userInfo?.address.length && navigate('/new-address', {state:pathname})
-    }, [navigate, userInfo.address, pathname])
+        if(!cartItems.length){
+            navigate('/cart')
+        }
+        if(!userInfo?.address.length){
+            navigate('/new-address', {state:pathname})
+        }
+    }, [navigate, userInfo.address, pathname, cartItems.length])
 
     function handleSelectAddr(idx) {
         const address = document.querySelectorAll('.address')
@@ -43,10 +48,10 @@ const ShippingScreen = () => {
     return (
         <React.Fragment >
             <CheckoutProgress login address />
-            <div className='sm:mt-5 flex justify-center items-center px-4 sm:px-0'>
-                <div className='flex-none w-full p-0 rounded-lg sm:px-12 py-10 sm:bg-slate-800 sm:w-fit'>
-                    <h3 className='text-center text-gray-400 font-bold text-xl sm:text-2xl mb-12'>Select address</h3>
-                    <form onSubmit={handleSubmit} className='[&>*]:block [&>*]:mb-8'>
+            <div className='sm:mt-12 flex justify-center items-center px-4 sm:px-0'>
+                <div className='relative flex-none w-full p-0 rounded-lg sm:px-12 py-10 sm:bg-slate-800 sm:w-fit'>
+                    <h3 className='sm:absolute top-0 -translate-y-1/2 px-3 py-2 rounded-full bg-gray-900 text-center text-gray-50 font-semibold text-xl sm:text-2xl '>Select address</h3>
+                    <form onSubmit={handleSubmit} className='[&>*]:block [&>*]:mb-8 mt-6'>
                             {userInfo.address.map((addr, idx) => (
                                 <div key={idx} onClick={()=>handleSelectAddr(idx)} className='select-none address relative cursor-pointer focus:outline-2 flex text-gray-200 bg-gray-700 px-5 py-3 rounded-lg sm:text-lg font-semibold italic'>
                                     <input type="radio" className='hidden'/>
