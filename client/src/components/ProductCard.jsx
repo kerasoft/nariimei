@@ -13,7 +13,6 @@ const ProductCard = ({product}) => {
   
   let green = (5 - product.rating) * 30 + 100
   let ratingBgColor = `rgb(0, ${green}, 0)`
-  console.log(ratingBgColor)
 
   function decrementQty() {
     if(cartItems[existsInCart].qty===1 && cartItems[existsInCart].qty>0){

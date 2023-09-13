@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useLogoutUserMutation } from '../slices/usersApiSlice'
 import { setCredentials } from '../slices/authSlice'
-import { saveShippingAddress } from '../slices/cartSlice'
+import { clearAddrAndPayment, clearCartItems } from '../slices/cartSlice'
 import { toast } from 'react-toastify'
 
 const ProfileScreen = () => {
@@ -19,7 +19,8 @@ const ProfileScreen = () => {
         try {
             await logoutUser()
             dispatch(setCredentials(null))
-            dispatch(saveShippingAddress(null))
+            dispatch(clearAddrAndPayment())
+            dispatch(clearCartItems())
             navigate('/login')
         } catch (error) {
             toast(error?.data?.message || error?.error)

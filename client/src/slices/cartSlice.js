@@ -9,6 +9,7 @@ const initialState = localStorage.getItem('cart') ? JSON.parse(localStorage.getI
     totalPrice: 0,
     totalQty: 0,
     shippingAddress: null,
+    paymentMethod: null,
 }
 
 const upadateCart = (state) => {
@@ -72,10 +73,35 @@ const cartSlice = createSlice({
         saveShippingAddress(state, action){
             state.shippingAddress = action.payload
             upadateCart(state)
+        },
+
+        savePaymentMethod(state, action){
+            state.paymentMethod = action.payload
+            upadateCart(state)
+        },
+
+        clearCartItems(state){
+            state.cartItems = []
+            state.totalPrice = 0
+            state.totalQty = 0
+            upadateCart(state)
+        },
+
+        clearAddrAndPayment(state){
+            state.shippingAddress = null
+            state.paymentMethod = null
+            upadateCart(state)
         }
     }
 })
 
-export const { addToCart, deleteFromCart, saveShippingAddress } = cartSlice.actions
+export const { 
+    addToCart,
+    deleteFromCart,
+    saveShippingAddress,
+    savePaymentMethod,
+    clearCartItems,
+    clearAddrAndPayment,
+} = cartSlice.actions
 
 export default cartSlice.reducer
