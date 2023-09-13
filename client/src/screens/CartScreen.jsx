@@ -22,18 +22,18 @@ const CartScreen = () => {
           {cartItems.map((item, i) => {
             return <div key={i} className='[&:not(:last-child)]:border-b-[2px] border-gray-700 m-4 pb-4 flex justify-between'>
               <Link to={`/product/${item._id}`} className=''>
-                <img className='w-20 sm:w-24 bg-gray-50 rounded-md' src={item.image} alt="" />
-                <h5 className='mt-2 font-semibold text-sm sm:text-base text-gray-200'>{item.name}</h5>
+                <img className='w-20 rounded-md sm:w-24 bg-gray-50' src={item.image} alt="" />
+                <h5 className='mt-2 text-sm font-semibold text-gray-200 sm:text-base'>{item.name}</h5>
               </Link>
               <div className='flex flex-col justify-between'>
-                <button onClick={()=>dispatch(deleteFromCart({i, purge:true}))} className='bg-gray-500 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex justify-center items-center self-end sm:text-lg'>
+                <button onClick={()=>dispatch(deleteFromCart({i, purge:true}))} className='flex items-center self-end justify-center w-6 h-6 bg-gray-500 rounded-full sm:w-7 sm:h-7 sm:text-lg'>
                   <RiDeleteBin5Fill />
                 </button>
-                <p className='text-lg sm:text-xl text-orange-600 text-end font-bold mt-auto'>&#8377;{item.totalPerUnit}</p>
-                <div className='flex flex-0 h-fit self-end rounded-md bg-gray-300 ring-2 ring-white mb-2 mt-3'>
-                  <button onClick={()=>dispatch(deleteFromCart({i, decrement:true}))} type='button' className='w-6 h-6 sm:w-8 sm:h-8 flex justify-center items-center text-lg sm:text-xl font-semibold'>-</button>
+                <p className='mt-auto text-lg font-bold text-orange-600 sm:text-xl text-end'>&#8377;{item.totalPerUnit}</p>
+                <div className='flex self-end mt-3 mb-2 bg-gray-300 rounded-md flex-0 h-fit ring-2 ring-white'>
+                  <button onClick={()=>dispatch(deleteFromCart({i, decrement:true}))} type='button' className='flex items-center justify-center w-6 h-6 text-lg font-semibold sm:w-8 sm:h-8 sm:text-xl'>-</button>
                   <div className='w-6 h-6 sm:w-8 sm:h-8 flex justify-center items-center border-x-[1px] border-white text-sm sm:text-lg font-semibold'>{item.qty}</div>
-                  <button onClick={()=>dispatch(addToCart({...item, qty:1}))} type='button' className='w-6 h-6 sm:w-8 sm:h-8 flex justify-center items-center text-lg sm:text-xl font-semibold'>+</button>
+                  <button onClick={()=>dispatch(addToCart({...item, qty:1}))} type='button' className='flex items-center justify-center w-6 h-6 text-lg font-semibold sm:w-8 sm:h-8 sm:text-xl'>+</button>
                 </div>
               </div>
             </div>
