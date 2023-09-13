@@ -46,7 +46,7 @@ const LoginScreen = () => {
         setFormData(formData => (
             {
                 ...formData,
-                [id]: (value.trim())
+                [id]: (id==='email') ? (value.toLowerCase().trim()) : (value.trim())
             }
         ))
     }

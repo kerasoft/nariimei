@@ -66,7 +66,7 @@ const RegisterScreen = () => {
         setFormData(formData=>(
             {
                 ...formData,
-                [id]: (id==='name')?(value):(value.trim())
+                [id]: (id==='email') ? (value.toLowerCase().trim()) : (id==='name') ? (value) : (value.trim())
             }
         ))
     }
@@ -99,7 +99,7 @@ const RegisterScreen = () => {
                             type='text'
                             id='email'
                             onChange={handleChange}
-                            value={email}
+                            value={email.toLowerCase()}
                             placeholder='abc@email.com'
                             autoComplete='false'
                         />
