@@ -44,6 +44,12 @@ const createOrder = asyncHandler(async(req, res)=>{
 //@access   Private
 const getMyOrders = asyncHandler(async(req, res)=>{
     const orders = await Order.find({user: req.user._id})
+    if(orders){
+        res.status(200).json(orders)
+    } else {
+        res.status(400)
+        throw new Error('Something went wrong, try again')
+    }
 })
 
 //@desc     Get user's orders by ID

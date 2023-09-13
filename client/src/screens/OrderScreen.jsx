@@ -17,7 +17,6 @@ const OrderScreen = () => {
   let orderDate = date.toDateString()
   const buffer = 8.64e+7 * 7
   let deliveryDate = new Date(buffer + date.getTime()).toDateString()
-  console.log(deliveryDate, orderDate)
 
   useEffect(() => {
     // clear shipping and paymentMethod only if order placed (redirected to login then to orderpage)
@@ -25,7 +24,6 @@ const OrderScreen = () => {
   }, [shippingAddrFromRedux, dispatch, prevPath])
 
   return (
-
     isLoading ? 
       <Loader /> :
       error ? 
