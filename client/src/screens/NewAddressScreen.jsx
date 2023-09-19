@@ -76,9 +76,9 @@ const NewAddressScreen = () => {
   return (
         <React.Fragment>
             {prevPath === '/shipping' && <CheckoutProgress login address />}
-            <div className='sm:mt-8 flex justify-center items-center px-4 sm:px-0'>
+            <div className='flex items-center justify-center px-4 sm:mt-8 sm:px-0'>
                 <div className='md:max-w-[55vw] lg:max-w-[45vw] mx-auto flex-1 w-full p-0 rounded-lg sm:px-12 py-10 sm:bg-slate-800 sm:w-fit'>
-                    <h3 className='text-center text-gray-400 font-bold text-2xl mb-12'> Shipping address</h3>
+                    <h3 className='mb-12 text-2xl font-bold text-center text-gray-400'> Shipping address</h3>
                     <form onSubmit={handleSubmit} className='[&>*]:block [&>*]:mb-5'>
                         <div className='relative'>
                             <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="line1">Line 1</label>
@@ -119,7 +119,7 @@ const NewAddressScreen = () => {
                         </div>
                         <div className='relative'>
                             <label className='absolute top-0 px-2 ml-2 text-gray-400 -translate-y-1/2 bg-gray-900 sm:bg-gray-800' htmlFor="state">State</label>
-                            <select className="text-gray-100 focus:outline-none focus:border-orange-500 w-full bg-transparent border-[2px] px-4 py-3 border-orange-700 rounded-md [&>*]:text-gray-50 [&>*]:bg-gray-700" id="state" value={state} onChange={handleChange} defaultValue='Karnataka'>
+                            <select className="text-gray-100 focus:outline-none focus:border-orange-500 w-full bg-transparent border-[2px] px-4 py-3 border-orange-700 rounded-md [&>*]:text-gray-50 [&>*]:bg-gray-700" id="state" value={state} onChange={handleChange}>
                                 {/* <option selected >--Select an option--</option> */}
                                 <option>Karnataka</option>
                                 <option>Kerala</option>
@@ -142,7 +142,7 @@ const NewAddressScreen = () => {
                         </div>
                         {prevPath==='/shipping' && <div className='inline-flex'>
                             <div id='checkBox' onClick={handleSaveAddr} className='cursor-pointer -mb-[3px] inline-block border-[2px] border-orange-600 w-5 h-5 rounded-sm'></div>
-                            <p onClick={handleSaveAddr} className='cursor-pointer select-none inline-block ml-2 text-gray-200'>Save this address?</p>
+                            <p onClick={handleSaveAddr} className='inline-block ml-2 text-gray-200 cursor-pointer select-none'>Save this address?</p>
                         </div>}
                         <button className='w-full px-5 py-3 font-bold tracking-wider uppercase bg-orange-700 rounded-md mt-7 text-gray-50' type='submit' disabled={isLoading}>
                             {prevPath === '/profile' ? 'add address' : 'proceed to payment'} {((saveAddr || (prevPath === '/profile')) && isLoading) && <Spinner />}

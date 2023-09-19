@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { savePaymentMethod } from '../slices/cartSlice'
 import CheckoutProgress from '../components/CheckoutProgress'
+import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { toast } from 'react-toastify'
-import PayPal from '../images/paypal.png'
-import Gpay from '../images/gpay.png'
-import COD from '../images/cod.svg'
+import PayOnline from '../images/payonline.png'
+import COD from '../images/cod.png'
+
 
 const PaymentScreen = () => {
     const { pathname } = useLocation()
@@ -25,21 +26,23 @@ const PaymentScreen = () => {
       }
     }, [navigate, shippingAddress, cartItems.length])
 
-    function handleChange(e){
-      setPayMethod(e.currentTarget.name)
-    }
+    function handlePayMethod(idx) {
+      const payMethod = document.querySelectorAll('.pay-method')
+      payMethod.forEach(el=>{
+          el.classList.remove('bg-slate-200')
+          el.lastChild.classList.add('hidden')
+      })
+      payMethod[idx].classList.add('bg-slate-200')
+      payMethod[idx].lastChild.classList.remove('hidden')
+      setPayMethod((idx===0 ? 'Pay Online' : 'Cash On Delivery'))
+  }
 
-    function handleSubmit(e) {
-      e.preventDefault()
-      if(payMethod && payMethod === 'CashOnDelivery') {
+    function handleClick() {
+      if(payMethod) {
         dispatch(savePaymentMethod(payMethod))
         navigate('/place-order', {state: pathname})
       }else{
-        if(payMethod && payMethod !== 'CashOnDelivery') {
-          toast('Sorry, Only cash on delivery available at this time')
-        } else {
           toast('Select a payment method to proceed')
-        }
       }
     }
     
@@ -47,23 +50,21 @@ const PaymentScreen = () => {
        (cartItems.length && shippingAddress) && <React.Fragment >
             <CheckoutProgress login address payment />
             <div className='sm:mt-12 flex justify-center items-center px-4 sm:px-0'>
-                <div className='relative sm:min-w-[30rem] flex-none w-full p-0 rounded-lg sm:px-12 py-10 sm:bg-slate-800 sm:w-fit'>
-                    <h3 className='sm:absolute top-0 -translate-y-1/2 bg-gray-900 px-3 py-2 rounded-full text-center text-gray-50 font-semibold text-xl sm:text-2xl'>Payment Method</h3>
-                    <form onSubmit={handleSubmit} className='[&>*]:block [&>*]:mb-4 mt-6'>
-                      <div className='w-full relative'>
-                        <input name='PayPal' id="paypal" onChange={handleChange} type="radio" checked={payMethod==='PayPal'} className="w-5 h-5 absolute top-1/2 left-8 -translate-y-1/2"/>
-                        <label htmlFor="paypal" className="w-full rounded-lg flex justify-center bg-black"><img className="w-36 rounded-lg px-2" src={PayPal} alt="paypal" /></label>
+                <div className='relative sm:min-w-[27.5rem] flex-none w-full p-0 rounded-lg sm:px-12 py-10 sm:bg-slate-800 sm:w-fit'>
+                    <h3 className='sm:absolute top-0 -translate-y-1/2 bg-gray-900 px-3 py-2 rounded-full text-center text-gray-200 font-semibold text-xl sm:text-2xl'>Payment Method</h3>
+                    <div className='py-2'>
+                      <div onClick={()=>{handlePayMethod(0)}} className='select-none pay-method relative cursor-pointer focus:outline-2 flex text-gray-200 bg-gray-50 justify-center rounded-lg sm:text-lg font-semibold italic mb-7 mt-2 px-5 py-2'>
+                        <img className='w-[17rem]' src={PayOnline} alt="online payment options" />
+                        <div className='absolute top-0 left-4 -translate-y-1/2 uppercase px-3 py-1 rounded-full bg-black text-sm'>Pay online</div>
+                        <BsFillCheckCircleFill className='hidden absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-gray-50' size={36}/>
                       </div>
-                      <div className='w-full relative'>
-                        <input name='Gpay' id="gpay" onChange={handleChange} type="radio" checked={payMethod==='Gpay'} className="w-5 h-5 absolute top-1/2 left-8 -translate-y-1/2"/>
-                        <label htmlFor="gpay" className="w-full rounded-lg flex justify-center bg-gray-500 py-2.5"><img className="w-[8rem] rounded-lg px-2" src={Gpay} alt="googlepay" /></label>
+                      <div onClick={()=>{handlePayMethod(1)}} className='select-none pay-method relative cursor-pointer focus:outline-2 flex text-gray-200 bg-gray-50 rounded-lg sm:text-lg font-semibold italic justify-center'>
+                        <img className='w-[14rem] h-[6.2rem]' src={COD} alt="online payment options" />
+                        <div className='absolute top-0 left-4 -translate-y-1/2 uppercase px-3 py-1 rounded-full bg-black text-sm'>cash on Delivery</div>
+                        <BsFillCheckCircleFill className='hidden absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-gray-50' size={36}/>
                       </div>
-                      <div className='w-full relative'>
-                        <input name='CashOnDelivery' id="COD" onChange={handleChange} type="radio" checked={payMethod==='CashOnDelivery'} className="w-5 h-5 absolute top-1/2 left-8 -translate-y-1/2"/>
-                        <label htmlFor="COD" className="w-full h-[4rem] overflow-hidden rounded-lg flex justify-center bg-gray-500"><img className="w-[9rem] rounded-lg px-2" src={COD} alt="cash on delivery" /></label>
-                      </div>
-                      <button className='w-full px-5 py-3 font-bold tracking-wider uppercase bg-orange-700 rounded-md mt-8 text-gray-50' type='submit'>preview order</button>
-                    </form>
+                      <button onClick={handleClick} className='w-full px-5 py-3 font-bold tracking-wider uppercase bg-orange-700 rounded-md mt-8 text-gray-50' type='button'>proceed to confirm</button>
+                    </div>
                 </div>
             </div>
         </React.Fragment>

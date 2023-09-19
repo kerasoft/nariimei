@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, useLocation, useParams } from 'react-router-dom'
-import { useGetOrderByIdQuery } from '../slices/ordersApiSlice'
+import { useGetOrderByIdQuery, useGetPaymentDetailsQuery, useUpdatePayStatusMutation } from '../slices/ordersApiSlice'
 import { clearAddrAndPayment } from '../slices/cartSlice'
 import Loader from '../components/Loader'
 import { toast } from 'react-toastify'
@@ -12,24 +12,33 @@ const OrderScreen = () => {
   const dispatch = useDispatch()
   const { shippingAddress: shippingAddrFromRedux } = useSelector(state => state.cart)
   const { data: order, isLoading, error } = useGetOrderByIdQuery(orderId)
+  const { data: paymentStatus } = useGetPaymentDetailsQuery(orderId)
+  const [updatePayStatus, {isLoading:loadingPayStatus}] = useUpdatePayStatusMutation()
+
 
   let date = new Date(`${order?.createdAt}`)
   let orderDate = date.toDateString()
   const buffer = 8.64e+7 * 7
   let deliveryDate = new Date(buffer + date.getTime()).toDateString()
 
+  console.log(paymentStatus)
+  useEffect(()=>{
+    if(order && (order.isPaid === false)){
+      paymentStatus === 'SUCCESS' && updatePayStatus({orderId:order._id, orderStatus: true})
+    }
+  },[paymentStatus, updatePayStatus, order])
   useEffect(() => {
     // clear shipping and paymentMethod only if order placed (redirected to login then to orderpage)
     (prevPath === '/login' && shippingAddrFromRedux) && dispatch(clearAddrAndPayment())
-  }, [shippingAddrFromRedux, dispatch, prevPath])
+  }, [shippingAddrFromRedux, dispatch, prevPath]) //eslint-disable-line
 
   return (
-    isLoading ? 
+    (isLoading || loadingPayStatus) ? 
       <Loader /> :
       error ? 
         toast(error?.data?.message || error?.error) && <Navigate to={'/profile'} /> :
         order && <div className='max-w-[1200px] mx-auto'>
-          <p className='mt-6 italic font-bold text-center text-gray-300 sm:pr-4 sm:mt-5 sm:text-end'>ORDER-ID: {order._id}</p>
+          <p className='mt-6 italic font-bold text-center text-gray-300 sm:mt-5 sm:text-end'>ORDER-ID: {order._id}</p>
           <div className='flex flex-col-reverse gap-5 mt-5 md:flex-row-reverse lg:gap-8 md:mt-5'>
             <div className='flex-1 px-4 py-5 bg-gray-950 rounded-xl sm:p-6 sm:px-8'>
               <h4 className='text-xl font-semibold text-gray-500'>Delivery Address</h4>

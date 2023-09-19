@@ -1,5 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Order from '../models/orderModel.js'
+import { getPaymentCF, orderCreateCF } from "../utils/cashfree.js";
 
 //@desc     Create orders
 //@route    POST /api/orders
@@ -34,6 +35,19 @@ const createOrder = asyncHandler(async(req, res)=>{
             totalPrice
         })
 
+        if(order.paymentMethod === 'Pay Online') {
+            let cfOrder = {
+                _id: order._id,
+                totalPrice: order.totalPrice,
+                user: {
+                    _id:req.user._id,
+                    email: req.user.email,
+                    phone: '+916363483718'
+                }
+            }
+            const {cfOrder:cfData} = await orderCreateCF(cfOrder)
+            order.paymentSessionId = cfData.paymentSessionId
+        }
         const createdOrder = await order.save()
         res.status(201).json(createdOrder)
     }
@@ -69,8 +83,13 @@ const getOrderById = asyncHandler(async(req, res)=>{
 //@desc     Update order payment status
 //@route    PUT /api/order/:id/pay
 //@access   Private
-const updatePayStatus = asyncHandler((req, res)=>{
-    res.send('update order payment status')
+const updatePayStatus = asyncHandler(async(req, res)=>{
+    const order = await Order.findById(req.params.id)
+    if(order){
+        order.isPaid = req.body.orderStatus
+        await order.save()
+        res.status(200).json({status: 'updated'})
+    }
 })
 
 //@desc     Update delivery status
@@ -83,8 +102,27 @@ const UpdateDeliveryStatus = asyncHandler((req, res)=>{
 //@desc     Get All orders
 //@route    GET /api/orders
 //@access   Private / Admin
-const getOrders = asyncHandler((req, res)=>{
-    res.send('get all orders')
+const getOrders = asyncHandler(async(req, res)=>{
+    const orders = await Order.find({})
+    if(orders){
+        res.status(200).json(orders)
+    } else {
+        res.status(500)
+        throw new Error('Server error, Unable to fetch orders')
+    }
+})
+
+//@desc     Get Payment status of an order
+//@route    GET /api/orders/:id/payment
+//@access   Private
+const getPaymentStatus = asyncHandler(async(req, res)=>{
+    const status = await getPaymentCF(req.params.id)
+    if(status){
+        res.status(200).json(status.cfPaymentsEntities[0].paymentStatus)
+    }else{
+        res.status(400)
+        throw new Error('Sorry, unable to fetch payment status at this time')
+    }
 })
 
 export {
@@ -94,4 +132,5 @@ export {
     updatePayStatus,
     UpdateDeliveryStatus,
     getOrders,
+    getPaymentStatus,
 }
