@@ -72,7 +72,9 @@ const getMyOrders = asyncHandler(async(req, res)=>{
 const getOrderById = asyncHandler(async(req, res)=>{
     const order = await Order.findById(req.params.id).populate('user', 'name email')
     let isOrderOfAuthUser = (order?.user?._id.toString() === req.user._id.toString())
-    if(order && isOrderOfAuthUser) {
+    if(order && req.user.isAdmin){
+        res.status(200).json(order)
+    } else if (order && isOrderOfAuthUser) {
         res.status(200).json(order)
     } else {
         res.status(404)
@@ -103,9 +105,11 @@ const UpdateDeliveryStatus = asyncHandler((req, res)=>{
 //@route    GET /api/orders
 //@access   Private / Admin
 const getOrders = asyncHandler(async(req, res)=>{
-    const orders = await Order.find({})
+    const allOrders = await Order.find({})
+    const totalOrders = allOrders.length
+    const orders = await Order.find({}).sort({createdAt:-1}).populate('user', 'name email').skip((Number(req.query.idx) * 12)).limit(12)
     if(orders){
-        res.status(200).json(orders)
+        res.status(200).json([orders, Math.floor(totalOrders/12)])
     } else {
         res.status(500)
         throw new Error('Server error, Unable to fetch orders')

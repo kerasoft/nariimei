@@ -50,14 +50,24 @@ const ProfileScreen = () => {
                     </li>
                 </ul>
             </div>
-            <ul className='lg:flex-1 text-[.875rem] bg-gray-800 p-4 md:p-6 rounded-lg lg:rounded-xl lg:border-none shadow-sm mt-5 lg:mt-0 text-gray-300 uppercase font-semibold space-y-2 tracking-wider'>
-                <li>
-                    <Link to={'/orders'}>Orders</Link>
-                </li>
-                <li>
-                    <Link>Coupons</Link>
-                </li>
-            </ul>
+            <div className='lg:flex-1 text-[.875rem] bg-gray-800 p-4 md:p-6 rounded-lg lg:rounded-xl lg:border-none shadow-sm mt-5 lg:mt-0 text-gray-300 uppercase font-semibold space-y-2 tracking-wider'>
+                {userInfo.isAdmin && <ul className='text-orange-600 border-b-[1px] border-gray-500 pb-4 mb-3 space-y-.5'>
+                    <li>
+                        <Link to={'/admin/orders'}>All Orders</Link>
+                    </li>
+                    <li>
+                        <Link to={'/admin/users'}>All Users</Link>
+                    </li>
+                </ul>}
+                <ul className='space-y-.5'>
+                    <li>
+                        <Link to={'/orders'}>Orders</Link>
+                    </li>
+                    <li>
+                        <Link>Coupons</Link>
+                    </li>
+                </ul>
+            </div>
         </div>
     )
 }

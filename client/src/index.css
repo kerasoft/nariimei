@@ -64,6 +64,10 @@ input:-webkit-autofill:focus {
     -webkit-text-fill-color: purple;
 }
 
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
 @media (min-width: 640px) {
     input:-webkit-autofill {
         -webkit-box-shadow:0 0 0 50px #1f2937 inset; /* Change the color to your own background color */
