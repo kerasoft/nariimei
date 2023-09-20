@@ -11,9 +11,9 @@ const CategoriesBanner = () => {
         'Smoked-Meat'
     ]
   return (
-    <div className='overflow-x-scroll mt-5 gap-x-4 no-scrollbar flex'>
+    <div className='flex pb-1 mt-5 overflow-x-scroll gap-x-4 scrollbar'>
         {productCategories.map((category, i)=>{
-            return <div key={i} className='bg-gradient-to-b from-gray-900 to-gray-600 px-8 py-4 text-gray-300 font-bold rounded-md w-fit flex-none cursor-pointer'>{category}</div>
+            return <div key={i} className='flex-none px-8 py-4 font-bold text-gray-300 rounded-md cursor-pointer bg-gradient-to-b from-gray-900 to-gray-700 w-fit'>{category}</div>
         })}
 
     </div>

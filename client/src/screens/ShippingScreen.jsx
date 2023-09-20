@@ -51,7 +51,7 @@ const ShippingScreen = () => {
                     <h3 className='sm:absolute top-0 -translate-y-1/2 px-3 py-2 rounded-full bg-gray-900 text-center text-gray-200 font-semibold text-xl sm:text-2xl '>Select address</h3>
                     <div className='[&>*]:block [&>*]:mb-8 mt-6'>
                             {userInfo.address.map((addr, idx) => (
-                                <div key={idx} onClick={()=>handleSelectAddr(idx)} className='select-none address relative cursor-pointer focus:outline-2 flex text-gray-200 bg-gray-700 px-5 py-3 rounded-lg sm:text-lg font-semibold italic'>
+                                <div key={idx} onClick={()=>handleSelectAddr(idx)} className='select-none address relative cursor-pointer focus:outline-2 flex text-gray-200 bg-gray-700 px-5 py-3 rounded-lg sm:text-lg font-medium italic'>
                                     <div className='mt-2'>
                                         {addr.line1} <br />
                                         {addr.line2} <br />
