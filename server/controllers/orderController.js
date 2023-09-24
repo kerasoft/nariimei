@@ -57,7 +57,7 @@ const createOrder = asyncHandler(async(req, res)=>{
 //@route    GET /api/orders/user
 //@access   Private
 const getMyOrders = asyncHandler(async(req, res)=>{
-    const orders = await Order.find({user: req.user._id})
+    const orders = await Order.find({user: req.user._id}).sort({createdAt: -1})
     if(orders){
         res.status(200).json(orders)
     } else {
@@ -97,8 +97,13 @@ const updatePayStatus = asyncHandler(async(req, res)=>{
 //@desc     Update delivery status
 //@route    PUT /api/orders/:id/delivery
 //@access   Private / Admin
-const UpdateDeliveryStatus = asyncHandler((req, res)=>{
-    res.send('update delivery status')
+const UpdateDeliveryStatus = asyncHandler(async(req, res)=>{
+    const order = await Order.findById(req.params.id)
+    if(order){
+        order.isDelivered = req.body.orderStatus
+        await order.save()
+        res.status(200).json({status: 'updated'})
+    }
 })
 
 //@desc     Get All orders
