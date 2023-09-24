@@ -59,7 +59,7 @@ const AdminOrdersScreen = () => {
             </thead>
             <tbody className='[&>*:nth-child(odd)]:bg-gray-900'>
               {!orders[0].length ? <Navigate to={`/admin/orders?page=${(page-1)< 0 ? 0: (page-1)}`} replace={true} /> : orders[0]?.map((order,idx)=>(
-                <tr onClick={()=>navigate(`/admin/orders/${order._id}`)} className='cursor-pointer [&>*]:p-2 [&>*]:px-5 [&>*]:text-start [&:odd'>
+                <tr key={idx} onClick={()=>navigate(`/admin/orders/${order._id}`)} className='cursor-pointer [&>*]:p-2 [&>*]:px-5 [&>*]:text-start [&:odd'>
                   <td className='flex gap-2'>{formatDate(order.createdAt)}</td>
                   <td className='uppercase'>{order._id}</td>
                   <td className='capitalize'>{order.user.name}</td>
